@@ -1,0 +1,4 @@
+10/22/2026-20:25:45.002156  [**] [1:1000001:2] LAB Ping detected [**] [Classification: Misc activity] [Priority: 3] {ICMP} 172.26.132.73:8 -> 8.8.8.8:0
+10/22/2026-20:25:46.004168  [**] [1:1000001:2] LAB Ping detected [**] [Classification: Misc activity] [Priority: 3] {ICMP} 172.26.132.73:8 -> 8.8.8.8:0
+10/22/2026-20:25:47.006138  [**] [1:1000001:2] LAB Ping detected [**] [Classification: Misc activity] [Priority: 3] {ICMP} 172.26.132.73:8 -> 8.8.8.8:0
+10/22/2026-20:25:48.007402  [**] [1:1000001:2] LAB Ping detected [**] [Classification: Misc activity] [Priority: 3] {ICMP} 172.26.132.73:8 -> 8.8.8.8:0
