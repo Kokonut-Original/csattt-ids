@@ -5,20 +5,31 @@ services:
     hostname: victim
     tty: true
     stdin_open: true
+    environment:
+      - DEBIAN_FRONTEND=noninteractive
     networks:
       lab_net:
         ipv4_address: 172.28.0.10
     ports:
-      - "2222:22"
-      - "8080:80"
+      - "127.0.0.1:2222:22"
+      - "127.0.0.1:8080:80"
+    volumes:
+      - ./logs/victim:/var/log
     command: >
-      bash -c "apt update &&
-      apt install -y openssh-server apache2 sudo iputils-ping &&
-      service ssh start &&
-      service apache2 start &&
-      useradd -m -s /bin/bash testuser &&
-      echo 'testuser:123456' | chpasswd &&
-      tail -f /dev/null"
+      bash -c "apt-get update ;
+      apt-get install -y openssh-server apache2 sudo iputils-ping rsyslog ;
+      touch /var/log/auth.log ;
+      chown syslog:adm /var/log/auth.log ;
+      sed -i '/imklog/s/^/#/' /etc/rsyslog.conf ;
+      id -u testuser >/dev/null 2>&1 || useradd -m -s /bin/bash testuser ;
+      echo 'testuser:123456' | chpasswd ;
+      rsyslogd ;
+      mkdir -p /run/sshd ;
+      ssh-keygen -A ;
+      /usr/sbin/sshd ;
+      service apache2 start ;
+      echo '>>> VICTIM SSH IS READY <<<' ;
+      tail -f /var/log/auth.log || tail -f /dev/null"
 
   kali:
     image: kalilinux/kali-rolling
@@ -26,12 +37,15 @@ services:
     hostname: kali
     tty: true
     stdin_open: true
+    environment:
+      - DEBIAN_FRONTEND=noninteractive
     networks:
       lab_net:
         ipv4_address: 172.28.0.20
     command: >
-      bash -c "apt update &&
-      apt install -y nmap hydra iputils-ping &&
+      bash -c "apt-get update &&
+      apt-get install -y nmap hydra iputils-ping curl &&
+      printf 'admin\n12345\npassword\n123456\nroot\n' > /root/pass.txt &&
       tail -f /dev/null"
 
   server3:
@@ -40,19 +54,35 @@ services:
     hostname: server3
     tty: true
     stdin_open: true
+    environment:
+      - DEBIAN_FRONTEND=noninteractive
     networks:
       lab_net:
         ipv4_address: 172.28.0.30
     ports:
-      - "8081:80"
+      - "127.0.0.1:2223:22"
+    volumes:
+      - ./logs/server3:/var/log
     command: >
-      bash -c "apt update &&
-      apt install -y iputils-ping &&
-      tail -f /dev/null"
+      bash -c "apt-get update ;
+      apt-get install -y openssh-server sudo iputils-ping rsyslog ;
+      touch /var/log/auth.log ;
+      chown syslog:adm /var/log/auth.log ;
+      sed -i '/imklog/s/^/#/' /etc/rsyslog.conf ;
+      id -u testuser2 >/dev/null 2>&1 || useradd -m -s /bin/bash testuser2 ;
+      echo 'testuser2:123456' | chpasswd ;
+      rsyslogd ;
+      mkdir -p /run/sshd ;
+      ssh-keygen -A ;
+      /usr/sbin/sshd ;
+      echo '>>> SERVER3 SSH IS READY <<<' ;
+      tail -f /var/log/auth.log || tail -f /dev/null"
 
 networks:
   lab_net:
     driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: br-lab
     ipam:
       config:
         - subnet: 172.28.0.0/24
