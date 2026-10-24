@@ -218,3 +218,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+logs/
+*.pem
+*.key
+*.crt
+wazuh-install-files.tar
+*password*
