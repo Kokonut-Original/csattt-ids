@@ -22,7 +22,7 @@ services:
       chown syslog:adm /var/log/auth.log &&
       (id -u testuser >/dev/null 2>&1 || useradd -m -s /bin/bash testuser) &&
       echo 'testuser:123456' | chpasswd &&
-      service rsyslog restart &&
+      (service rsyslog start || service rsyslog restart || true) &&
       mkdir -p /run/sshd &&
       ssh-keygen -A &&
       service ssh start &&
@@ -69,7 +69,7 @@ services:
       chown syslog:adm /var/log/auth.log &&
       (id -u testuser2 >/dev/null 2>&1 || useradd -m -s /bin/bash testuser2) &&
       echo 'testuser2:123456' | chpasswd &&
-      service rsyslog restart &&
+      (service rsyslog start || service rsyslog restart || true) &&
       mkdir -p /run/sshd &&
       ssh-keygen -A &&
       service ssh start &&
