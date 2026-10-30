@@ -1,2 +1,0 @@
-10/29/2026-20:24:57.504873  [**] [1:1000002:1] LAB ICMP flood [**] [Classification: Attempted Denial of Service] [Priority: 2] {ICMP} 172.28.0.20:8 -> 172.28.0.10:0
-10/29/2026-20:25:02.605049  [**] [1:1000002:1] LAB ICMP flood [**] [Classification: Attempted Denial of Service] [Priority: 2] {ICMP} 172.28.0.20:8 -> 172.28.0.10:0
