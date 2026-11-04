@@ -1,0 +1,2 @@
+10/30/2026-09:41:21.921764  [**] [1:1000004:1] LAB DNS tunnel [**] [Classification: Potentially Bad Traffic] [Priority: 2] {UDP} 172.28.0.20:48750 -> 172.28.0.10:53
+10/30/2026-09:41:34.380084  [**] [1:1000004:1] LAB DNS tunnel [**] [Classification: Potentially Bad Traffic] [Priority: 2] {UDP} 172.28.0.20:60917 -> 172.28.0.10:53

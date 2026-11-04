@@ -1,1 +1,1 @@
-10/29/2026-00:03:08.510281  [**] [1:1000003:1] LAB Port scan [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 172.28.0.20:52399 -> 172.28.0.10:21
+10/29/2026-00:03:08.510281  [**] [1:1000001:1] LAB Port scan [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 172.28.0.20:52399 -> 172.28.0.10:21
