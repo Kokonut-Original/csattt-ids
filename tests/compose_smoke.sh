@@ -18,7 +18,16 @@ mkdir -p "$LAB_STATE_DIR/secrets" "$LAB_STATE_DIR/pcap"
 openssl rand -base64 24 > "$LAB_STATE_DIR/secrets/victim_password"
 openssl rand -base64 24 > "$LAB_STATE_DIR/secrets/server3_password"
 compose() { docker compose -f lab/docker-compose.yml "$@"; }
-cleanup() { compose down --timeout 10; }
+cleanup() {
+  result=$?
+  trap - EXIT
+  if [ "$result" -ne 0 ]; then
+    compose ps -a || true
+    compose logs --no-color --tail 60 || true
+  fi
+  compose down --timeout 10 || result=1
+  exit "$result"
+}
 trap cleanup EXIT
 compose config --quiet
 compose build

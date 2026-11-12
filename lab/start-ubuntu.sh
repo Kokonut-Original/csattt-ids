@@ -20,6 +20,7 @@ ssh-keygen -A
 rsyslogd
 if [ "$LAB_ROLE" = victim ]; then
   /usr/sbin/sshd
+  mkdir -p /var/log/apache2
   apache2ctl start
   exec dnsmasq --no-daemon --conf-file=/dev/null --no-resolv --no-hosts \
     --listen-address=172.28.0.10 --bind-interfaces --local=/exfil.lab/
