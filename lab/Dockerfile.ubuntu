@@ -1,0 +1,11 @@
+FROM ubuntu:22.04
+ENV DEBIAN_FRONTEND=noninteractive TZ=Asia/Ho_Chi_Minh
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    openssh-server apache2 sudo iputils-ping rsyslog dnsmasq-base curl tzdata \
+    && rm -rf /var/lib/apt/lists/* \
+    && sed -i '/imklog/s/^/#/' /etc/rsyslog.conf \
+    && ln -snf /usr/share/zoneinfo/Asia/Ho_Chi_Minh /etc/localtime \
+    && echo Asia/Ho_Chi_Minh > /etc/timezone
+COPY start-ubuntu.sh /usr/local/bin/start-lab
+RUN chmod 755 /usr/local/bin/start-lab
+ENTRYPOINT ["/usr/local/bin/start-lab"]
