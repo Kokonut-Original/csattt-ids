@@ -25,3 +25,7 @@ Làm theo [hướng dẫn dựng lab](lab/README.md) để chuẩn bị bí mậ
 Thay đổi theo `feature/* → PR → develop`, tối thiểu một thành viên khác review trên GitHub trước merge. Không push trực tiếp main. Xem [quy trình đóng góp](CONTRIBUTING.md), [phạm vi và đạo đức](docs/ETHICS-CLO.md), [chính sách bảo mật](SECURITY.md), [bảng rà quy định GitHub](docs/GITHUB-CHECKLIST.md).
 
 PR hiện tại: #15. Tag `v1.0-midterm`, `v2.0-final` và Release có PDF/video do Long tự tạo sau khi kiểm tra bộ nộp; không coi tên milestone là tag đã tồn tại. Không đưa mật khẩu, token, pcap/log thô hoặc image/snapshot VM lên repo. Repo BTL tách khỏi nghiên cứu NEXUS.
+
+## IPS DNS tùy chọn
+
+[Demo IPS/drop và rollback](lab/IPS-DNS.md) sử dụng script DNS nguyên trạng và chặn marker của bài trong namespace victim; kết quả nằm ở `docs/results/ips-dns-drop-2026-11-13.*`. Lab hiện để IDS; Compose không tự bật IPS. Nhánh này phụ thuộc bản tích hợp trong PR #15, chưa được review/merge.

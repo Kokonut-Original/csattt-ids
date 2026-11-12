@@ -38,7 +38,7 @@ Kết quả tổng thể: lab đã dựng lại và có kiểm chứng năm kị
 | Responsible disclosure qua kênh riêng và giảng viên | Đạt về quy trình dự thảo | [SECURITY](../SECURITY.md) quy định dừng khai thác, báo riêng, không dán secret | Bổ sung kênh/tài khoản giảng viên được nhóm xác nhận; chưa có vụ việc thật cần báo cáo |
 | Không public payload và có retention dữ liệu | Chưa hoàn tất chính sách | Repo private, output mới ngoài repo; main còn raw logs/pcap, [#13](https://github.com/Kokonut-Original/csattt-ids/issues/13) đang mở | Rà dữ liệu cũ, chốt thời hạn lưu/xóa; dọn main chỉ bằng PR riêng sau khi xác nhận bản cần giữ |
 | Bài 4: FP/FN và tuning | Chưa kết luận hoàn tất | Có kết quả Duy (8.0.6) và smoke test tích hợp (7.0.3), [#9](https://github.com/Kokonut-Original/csattt-ids/issues/9) mở | Chốt đơn vị/mẫu số và đối chiếu phiên bản; không lấy số alert làm số lượt tấn công |
-| Bài 4: timeline cảnh báo rồi chặn drop | Chưa đạt | Rule hiện là alert; [#8](https://github.com/Kokonut-Original/csattt-ids/issues/8) mở | Làm IPS/drop và bằng chứng chặn ở task riêng sau việc 1 |
+| Bài 4: timeline cảnh báo rồi chặn drop | Đã kiểm chứng DNS trong nhánh IPS; chờ review | [Kết quả IDS–IPS–IDS](results/ips-dns-drop-2026-11-13.md), SID 1000014 blocked ở EVE/Wazuh; #8 còn mở | Review, tái lập độc lập và ghép vào demo cuối; không suy thành chặn mọi kịch bản |
 
 ## Giới hạn truy cập và bằng chứng
 
