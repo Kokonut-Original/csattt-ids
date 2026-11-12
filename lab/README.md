@@ -70,3 +70,5 @@ Rollback: dùng các image snapshot và Compose cũ trong thư mục backup; t�
 Image nền Ubuntu/Kali và kho apt có thể thay đổi theo thời gian; lưu image ID, danh sách phiên bản gói và bằng chứng build của lượt kiểm tra. Đây chưa phải build bit-for-bit có pin toàn bộ apt snapshot.
 
 Build cần truy cập kho gói. Bridge hiện tại có NAT, không phải mạng air-gap; chỉ bind loopback không tự chặn container đi Internet. Khi chạy mô phỏng, dùng IP lab cố định và DNS không upstream, capture toàn bridge để kiểm tra có lưu lượng IP ra ngoài subnet hay không. Không tuyên bố cô lập tuyệt đối từ một lần capture. Không đổi mạng Windows/NEXUS để phục vụ BTL.
+
+Trên laptop tích hợp, `/home/student/lab/docker-compose.yml` hiện chỉ include file Compose trong repo với project_directory đúng và env_file cục bộ. Model đã đối chiếu bằng nhau; tránh sửa riêng entrypoint này thành một cấu hình thứ hai. Compose cũ có credential đã được giữ trong backup ngoài repo; hai mật khẩu test hiện tại đã đổi và chỉ nằm ở thư mục secrets cục bộ. Image không chứa SSH host key: key được tạo riêng khi khởi động container.

@@ -1,11 +1,11 @@
 {
-  "started_utc": "2026-11-12T18:28:08.204200+00:00",
+  "started_utc": "2026-11-12T18:48:58.501937+00:00",
   "scope": "172.28.0.0/24",
   "tests": [
     {
       "name": "benign",
-      "started_utc": "2026-11-12T18:28:09.453866+00:00",
-      "ended_utc": "2026-11-12T18:28:20.596328+00:00",
+      "started_utc": "2026-11-12T18:48:59.736037+00:00",
+      "ended_utc": "2026-11-12T18:49:10.988467+00:00",
       "exit_code": 0,
       "expected_sid": null,
       "pass": true,
@@ -16,22 +16,22 @@
     },
     {
       "name": "01_port_scan",
-      "started_utc": "2026-11-12T18:28:20.741518+00:00",
-      "ended_utc": "2026-11-12T18:28:33.599110+00:00",
+      "started_utc": "2026-11-12T18:49:11.110732+00:00",
+      "ended_utc": "2026-11-12T18:49:24.018709+00:00",
       "exit_code": 0,
       "expected_sid": 1000001,
       "pass": true,
       "alerts": {
         "suricata": [
           {
-            "timestamp": "2026-11-12T10:28:23.257530-0800",
+            "timestamp": "2026-11-12T10:49:13.666071-0800",
             "sid": 1000001,
             "signature": "LAB Port scan",
             "src_ip": "172.28.0.20",
             "dest_ip": "172.28.0.10"
           },
           {
-            "timestamp": "2026-11-12T10:28:23.362151-0800",
+            "timestamp": "2026-11-12T10:49:13.749959-0800",
             "sid": 1000002,
             "signature": "LAB SSH brute-force",
             "src_ip": "172.28.0.20",
@@ -40,14 +40,14 @@
         ],
         "wazuh": [
           {
-            "timestamp": "2026-11-12T10:28:24.806-0800",
+            "timestamp": "2026-11-12T10:49:13.759-0800",
             "sid": 1000001,
             "signature": "LAB Port scan",
             "src_ip": "172.28.0.20",
             "dest_ip": "172.28.0.10"
           },
           {
-            "timestamp": "2026-11-12T10:28:24.806-0800",
+            "timestamp": "2026-11-12T10:49:13.759-0800",
             "sid": 1000002,
             "signature": "LAB SSH brute-force",
             "src_ip": "172.28.0.20",
@@ -58,15 +58,15 @@
     },
     {
       "name": "02_ssh_bruteforce",
-      "started_utc": "2026-11-12T18:29:38.724363+00:00",
-      "ended_utc": "2026-11-12T18:29:56.289474+00:00",
+      "started_utc": "2026-11-12T18:50:29.123837+00:00",
+      "ended_utc": "2026-11-12T18:50:47.407824+00:00",
       "exit_code": 0,
       "expected_sid": 1000002,
       "pass": true,
       "alerts": {
         "suricata": [
           {
-            "timestamp": "2026-11-12T10:29:41.498585-0800",
+            "timestamp": "2026-11-12T10:50:32.168506-0800",
             "sid": 1000002,
             "signature": "LAB SSH brute-force",
             "src_ip": "172.28.0.20",
@@ -75,7 +75,7 @@
         ],
         "wazuh": [
           {
-            "timestamp": "2026-11-12T10:29:42.909-0800",
+            "timestamp": "2026-11-12T10:50:33.882-0800",
             "sid": 1000002,
             "signature": "LAB SSH brute-force",
             "src_ip": "172.28.0.20",
@@ -86,15 +86,15 @@
     },
     {
       "name": "03_icmp_flood",
-      "started_utc": "2026-11-12T18:29:56.419113+00:00",
-      "ended_utc": "2026-11-12T18:30:06.209094+00:00",
+      "started_utc": "2026-11-12T18:50:47.517443+00:00",
+      "ended_utc": "2026-11-12T18:50:57.151567+00:00",
       "exit_code": 0,
       "expected_sid": 1000003,
       "pass": true,
       "alerts": {
         "suricata": [
           {
-            "timestamp": "2026-11-12T10:29:58.814624-0800",
+            "timestamp": "2026-11-12T10:50:49.903426-0800",
             "sid": 1000003,
             "signature": "LAB ICMP flood",
             "src_ip": "172.28.0.20",
@@ -103,7 +103,7 @@
         ],
         "wazuh": [
           {
-            "timestamp": "2026-11-12T10:29:59.005-0800",
+            "timestamp": "2026-11-12T10:50:51.897-0800",
             "sid": 1000003,
             "signature": "LAB ICMP flood",
             "src_ip": "172.28.0.20",
@@ -114,15 +114,15 @@
     },
     {
       "name": "04_dns_simulation",
-      "started_utc": "2026-11-12T18:30:06.343578+00:00",
-      "ended_utc": "2026-11-12T18:30:21.864271+00:00",
+      "started_utc": "2026-11-12T18:50:57.272134+00:00",
+      "ended_utc": "2026-11-12T18:51:12.788228+00:00",
       "exit_code": 0,
       "expected_sid": 1000004,
       "pass": true,
       "alerts": {
         "suricata": [
           {
-            "timestamp": "2026-11-12T10:30:10.849382-0800",
+            "timestamp": "2026-11-12T10:51:01.637321-0800",
             "sid": 1000004,
             "signature": "LAB DNS tunnel",
             "src_ip": "172.28.0.20",
@@ -131,7 +131,7 @@
         ],
         "wazuh": [
           {
-            "timestamp": "2026-11-12T10:30:11.331-0800",
+            "timestamp": "2026-11-12T10:51:01.904-0800",
             "sid": 1000004,
             "signature": "LAB DNS tunnel",
             "src_ip": "172.28.0.20",
@@ -142,15 +142,15 @@
     },
     {
       "name": "05_reverse_shell",
-      "started_utc": "2026-11-12T18:30:21.976751+00:00",
-      "ended_utc": "2026-11-12T18:30:26.288530+00:00",
+      "started_utc": "2026-11-12T18:51:12.902398+00:00",
+      "ended_utc": "2026-11-12T18:51:17.268285+00:00",
       "exit_code": 0,
       "expected_sid": 1000005,
       "pass": true,
       "alerts": {
         "suricata": [
           {
-            "timestamp": "2026-11-12T10:30:24.071198-0800",
+            "timestamp": "2026-11-12T10:51:14.992019-0800",
             "sid": 1000005,
             "signature": "LAB Reverse shell - port 4444 accepted",
             "src_ip": "172.28.0.20",
@@ -159,7 +159,7 @@
         ],
         "wazuh": [
           {
-            "timestamp": "2026-11-12T10:30:25.357-0800",
+            "timestamp": "2026-11-12T10:51:15.913-0800",
             "sid": 1000005,
             "signature": "LAB Reverse shell - port 4444 accepted",
             "src_ip": "172.28.0.20",
@@ -175,18 +175,21 @@
     "Small smoke/regression set, not a general FP/FN estimate.",
     "Existing network has NAT; capture checks only the measured interval."
   ],
-  "ended_utc": "2026-11-12T18:30:26.437923+00:00",
+  "ended_utc": "2026-11-12T18:51:17.446083+00:00",
   "outside_subnet_ipv4_packets": 0,
   "image_ids": {
-    "victim": "sha256:618daa7d1842b16ce8a225f4978d0ea7cdd3265d6cef9697780e2844e679ae05",
+    "victim": "sha256:213810d0be6a82daa97219239d6be24a4b9ed6fc6c9c9de4dd3f40e5eddd0485",
     "kali": "sha256:1532128320665cbab9a2fa08d48a0fd2b343cf576b3094520adbad4d1064bab6",
-    "server3": "sha256:618daa7d1842b16ce8a225f4978d0ea7cdd3265d6cef9697780e2844e679ae05"
+    "server3": "sha256:213810d0be6a82daa97219239d6be24a4b9ed6fc6c9c9de4dd3f40e5eddd0485"
   },
   "all_pass": true,
-  "pcap_sha256": "6ee73a40817a34102ee946b9d09750c3d1de0ab32386ea151fbaeb39b8116403",
+  "pcap_sha256": "d849cf610c8e27238583d9129a5b8fd4d63a7356ddcaec8251db0722c46bb998",
   "ipv6_packets_in_bridge_capture": 0,
   "suricata_version": "This is Suricata version 7.0.3 RELEASE",
   "wazuh_manager_package": "4.14.9-1",
   "config_hashes_unchanged": true,
-  "bridge_network_id_unchanged": true
+  "bridge_network_id_unchanged": true,
+  "credentials_rotated_outside_repo": true,
+  "container_hostkeys_distinct": true,
+  "old_compose_entrypoint_resolves_to_repo": true
 }

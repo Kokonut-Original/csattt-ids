@@ -22,7 +22,7 @@ if [ "$ROLE" == "attacker" ]; then
     sleep 0.3
     kill -0 "$PID"
     sleep 1
-    nc -lvnp $PORT
+    nc -lvnp "$PORT"
     kill -INT "$PID"
     wait "$PID" || true
     trap - EXIT

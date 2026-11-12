@@ -20,3 +20,5 @@ Network ID và SHA256 của `suricata.yaml`, rule đang nạp, `ossec.conf` khô
 Trước thay container đã sao lưu Compose, file root/tmp, pcap/log, packages, metadata và image snapshot cục bộ; hash file sao lưu đã được đối chiếu. Bản backup/raw pcap/raw log/metadata có thể chứa bí mật nên không đưa vào repo. Lần startup đầu lỗi do không có service script rsyslog; startup đã đổi sang daemon trực tiếp, sau đó rebuild và chạy các kiểm tra trên thành công.
 
 Giới hạn: Suricata tích hợp là 7.0.3, khác 8.0.6 trong kết quả tuần 2 của Duy. Nmap cũng khớp rule SSH vì rule đếm SYN tới cổng 22, không đọc kết quả mật khẩu. Một lượt benign không đủ khẳng định không có báo giả; không tính FP/FN từ số dòng alert. Chưa kiểm chứng từng cảnh báo bằng Dashboard trong phiên này. IPS/drop, báo cáo/slide/video và review độc lập là các việc riêng.
+
+Đã kiểm lại toàn bộ sáu lượt trên image cuối sau khi đổi hai mật khẩu test cục bộ và bỏ SSH host key khỏi image build; mỗi container sinh key riêng. JSON là lượt cuối. File Compose cũ ngoài repo đã chuyển thành entrypoint tham chiếu repo; model đã được so sánh bằng nhau.
