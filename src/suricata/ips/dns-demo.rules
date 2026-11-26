@@ -1,0 +1,2 @@
+# Scoped classroom demo for the existing script 04, not a generic DNS-tunnel detector.
+drop dns 172.28.0.20 any -> 172.28.0.10 53 (msg:"BTL IPS DNS simulation blocked"; dns.query; content:".phan"; nocase; content:".exfil.lab"; nocase; endswith; classtype:policy-violation; sid:1000014; rev:1;)

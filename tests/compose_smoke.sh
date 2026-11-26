@@ -31,6 +31,8 @@ cleanup() {
 trap cleanup EXIT
 compose config --quiet
 compose build
+docker build -f lab/Dockerfile.ips-tools -t csattt-ips-tools:local lab
+docker run --rm --network none csattt-ips-tools:local -c 'command -v iptables systemctl python3'
 compose up -d --wait --wait-timeout 90
 bash tests/normal_traffic.sh
 if docker exec kali touch /root/scripts/.ci-write-check 2>/dev/null; then

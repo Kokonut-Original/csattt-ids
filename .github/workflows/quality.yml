@@ -53,5 +53,7 @@ jobs:
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
+      - name: Test IPS rollback comparison without host firewall access
+        run: python3 -m unittest discover -s tests -p 'test_*.py' -v
       - name: Build, run benign checks, and verify persistence after recreation
         run: bash tests/compose_smoke.sh
