@@ -1,82 +1,91 @@
+name: lab
 services:
   victim:
-    image: ubuntu:22.04
+    build:
+      context: .
+      dockerfile: Dockerfile.ubuntu
+    image: csattt-ubuntu:local
     container_name: victim
     hostname: victim
-    tty: true
-    stdin_open: true
     environment:
-      - DEBIAN_FRONTEND=noninteractive
-      - TZ=Asia/Ho_Chi_Minh
+      LAB_ROLE: victim
+      TZ: Asia/Ho_Chi_Minh
+    working_dir: /root/scripts
     networks:
       lab_net:
         ipv4_address: 172.28.0.10
     ports:
       - "127.0.0.1:2222:22"
       - "127.0.0.1:8080:80"
-    command: >
-      bash -c "touch /var/log/auth.log &&
-      apt-get update &&
-      apt-get install -y openssh-server apache2 sudo iputils-ping rsyslog &&
-      sed -i '/imklog/s/^/#/' /etc/rsyslog.conf &&
-      chown syslog:adm /var/log/auth.log &&
-      (id -u testuser >/dev/null 2>&1 || useradd -m -s /bin/bash testuser) &&
-      echo 'testuser:123456' | chpasswd &&
-      (service rsyslog start || service rsyslog restart || true) &&
-      mkdir -p /run/sshd &&
-      ssh-keygen -A &&
-      service ssh start &&
-      service apache2 start &&
-      tail -f /var/log/auth.log"
+    volumes:
+      - ${LAB_STATE_DIR:?Set LAB_STATE_DIR}/logs/victim:/var/log
+      - ../scripts:/root/scripts:ro
+      - ${LAB_STATE_DIR:?Set LAB_STATE_DIR}/pcap:/root/pcap
+    secrets:
+      - source: victim_password
+        target: lab_password
+    healthcheck:
+      test: ["CMD-SHELL", "pgrep -x sshd >/dev/null && curl -fsS http://127.0.0.1/ >/dev/null && pgrep -x dnsmasq >/dev/null"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
 
   kali:
-    image: kalilinux/kali-rolling
+    build:
+      context: .
+      dockerfile: Dockerfile.kali
+    image: csattt-kali:local
     container_name: kali
     hostname: kali
-    tty: true
-    stdin_open: true
     environment:
-      - DEBIAN_FRONTEND=noninteractive
-      - TZ=Asia/Ho_Chi_Minh
+      TZ: Asia/Ho_Chi_Minh
+    working_dir: /root/scripts
     networks:
       lab_net:
         ipv4_address: 172.28.0.20
-    command: >
-      bash -c "apt-get update &&
-      apt-get install -y nmap hydra hping3 iputils-ping curl &&
-      printf 'admin\n12345\npassword\n123456\nroot\n' > /root/pass.txt &&
-      tail -f /dev/null"
+    volumes:
+      - ../scripts:/root/scripts:ro
+      - ${LAB_STATE_DIR:?Set LAB_STATE_DIR}/pcap:/root/pcap
+      - ${LAB_STATE_DIR:?Set LAB_STATE_DIR}/logs/victim:/root/logs/victim:ro
+      - ./fixtures/ssh-wrong-guesses.txt:/root/pass.txt:ro
+    healthcheck:
+      test: ["CMD-SHELL", "command -v nmap hydra hping3 tcpdump dig nc sshpass >/dev/null"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
 
   server3:
-    image: ubuntu:22.04
+    image: csattt-ubuntu:local
     container_name: server3
     hostname: server3
-    tty: true
-    stdin_open: true
     environment:
-      - DEBIAN_FRONTEND=noninteractive
-      - TZ=Asia/Ho_Chi_Minh
+      LAB_ROLE: server3
+      TZ: Asia/Ho_Chi_Minh
     networks:
       lab_net:
         ipv4_address: 172.28.0.30
     ports:
       - "127.0.0.1:2223:22"
-    command: >
-      bash -c "touch /var/log/auth.log &&
-      apt-get update &&
-      apt-get install -y openssh-server sudo iputils-ping rsyslog &&
-      sed -i '/imklog/s/^/#/' /etc/rsyslog.conf &&
-      chown syslog:adm /var/log/auth.log &&
-      (id -u testuser2 >/dev/null 2>&1 || useradd -m -s /bin/bash testuser2) &&
-      echo 'testuser2:123456' | chpasswd &&
-      (service rsyslog start || service rsyslog restart || true) &&
-      mkdir -p /run/sshd &&
-      ssh-keygen -A &&
-      service ssh start &&
-      tail -f /var/log/auth.log"
+    volumes:
+      - ${LAB_STATE_DIR:?Set LAB_STATE_DIR}/logs/server3:/var/log
+    secrets:
+      - source: server3_password
+        target: lab_password
+    healthcheck:
+      test: ["CMD-SHELL", "pgrep -x sshd >/dev/null && pgrep -x rsyslogd >/dev/null"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+
+secrets:
+  victim_password:
+    file: ${LAB_STATE_DIR:?Set LAB_STATE_DIR}/secrets/victim_password
+  server3_password:
+    file: ${LAB_STATE_DIR:?Set LAB_STATE_DIR}/secrets/server3_password
 
 networks:
   lab_net:
+    name: lab_lab_net
     driver: bridge
     driver_opts:
       com.docker.network.bridge.name: br-lab

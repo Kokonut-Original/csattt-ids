@@ -1,0 +1,22 @@
+{
+  "checked_utc": "2026-11-12T18:52:22.977080+00:00",
+  "scope": "local BTL repository; scanner network disabled",
+  "checks": {
+    "bash_syntax": "pass",
+    "shellcheck_warning": "pass",
+    "actionlint": "pass",
+    "semgrep_local_three_rule_policy": "pass, 0 findings",
+    "gitleaks_git_all": "pass, 25 commits scanned, 0 default-rule findings"
+  },
+  "limits": [
+    "Local results are not GitHub Actions results.",
+    "Default Gitleaks patterns do not detect every simple password; historical lab credentials have been invalidated.",
+    "Semgrep policy is deliberately limited; not a full vulnerability assessment."
+  ],
+  "scanner_image_ids": {
+    "koalaman/shellcheck:stable": "sha256:1b75f92cc7117e0b61c8f18ee987bd333a62454b214838a3e2718101b4f191d7",
+    "semgrep/semgrep:latest": "sha256:7230146cc598b377481073f4c504296ca7b6d0f7a0e9cebc134be89cb5f694bf",
+    "ghcr.io/gitleaks/gitleaks:latest": "sha256:4b81af4c7b4159acfdbbbfede6647bf49b4c9f24dc2a2bbd4581f39d5223fcfa",
+    "rhysd/actionlint:latest": "sha256:7ef0d156288b43c3bd5ee96bac787a28aae53275e88e4f9476a64bc0c19195c9"
+  }
+}
