@@ -1,0 +1,22 @@
+rules:
+  - id: embedded-credential
+    languages: [generic]
+    severity: ERROR
+    message: Move credentials into local secret files outside the repository.
+    pattern-regex: '(?i)(?:password|passwd|api[_-]?key|token)\s*[:=]\s*["''][^$"''\r\n][^"''\r\n]{5,}["'']'
+    paths:
+      include: [/lab/*.sh, /lab/*.yml, /lab/Dockerfile*, /scripts/*.sh, /scripts/*.py, /tests/*.sh, /tests/*.py, /.github/**/*.yml]
+  - id: embedded-private-key
+    languages: [generic]
+    severity: ERROR
+    message: Private keys must never be committed.
+    pattern-regex: '-----BEGIN (?:RSA |OPENSSH |EC |DSA )?PRIVATE KEY-----'
+    paths:
+      include: [/lab/*.sh, /lab/*.yml, /lab/Dockerfile*, /scripts/*.sh, /scripts/*.py, /tests/*.sh, /tests/*.py, /.github/**/*.yml]
+  - id: privileged-lab-escape
+    languages: [generic]
+    severity: ERROR
+    message: Review scope before granting host-level access to a lab container.
+    pattern-regex: '(?:privileged:\s*true|/var/run/docker\.sock|network_mode:\s*host)'
+    paths:
+      include: [/lab/**]

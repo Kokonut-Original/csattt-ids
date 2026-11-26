@@ -1,0 +1,10 @@
+FROM kalilinux/kali-rolling
+ENV DEBIAN_FRONTEND=noninteractive TZ=Asia/Ho_Chi_Minh
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    nmap hydra hping3 iputils-ping curl tcpdump dnsutils netcat-openbsd \
+    openssh-client sshpass tzdata \
+    && rm -rf /var/lib/apt/lists/* \
+    && ln -snf /usr/share/zoneinfo/Asia/Ho_Chi_Minh /etc/localtime \
+    && echo Asia/Ho_Chi_Minh > /etc/timezone
+WORKDIR /root/scripts
+CMD ["sleep", "infinity"]

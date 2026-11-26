@@ -1,0 +1,1 @@
+10/29/2026-02:34:58.396554  [**] [1:1000002:2] LAB SSH brute-force [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 172.28.0.20:39008 -> 172.28.0.10:22

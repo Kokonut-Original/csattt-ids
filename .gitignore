@@ -218,3 +218,18 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+logs/
+*.pem
+*.key
+*.crt
+wazuh-install-files.tar
+*password*
+
+# Local lab state and credentials
+.env.*
+!.env.example
+secrets/
+backups/
+pcap/
+*.pcap
+*.pcapng

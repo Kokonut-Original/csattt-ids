@@ -1,0 +1,1 @@
+10/29/2026-17:20:37.304364  [**] [1:1000005:2] LAB Reverse shell - port 4444 accepted [**] [Classification: A Network Trojan was detected] [Priority: 1] {TCP} 172.28.0.20:4444 -> 172.28.0.30:54844

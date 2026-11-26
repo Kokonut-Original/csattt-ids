@@ -1,0 +1,59 @@
+name: BTL quality
+on:
+  pull_request:
+    branches: [develop, main]
+  push:
+    branches: [develop, main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: btl-quality-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  lint:
+    name: BTL lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Shell syntax and lint
+        run: |
+          bash -n lab/start-ubuntu.sh
+          for file in scripts/*.sh tests/normal_traffic.sh tests/compose_smoke.sh; do bash -n "$file"; done
+          docker run --rm -v "$PWD:/src:ro" -w /src koalaman/shellcheck:stable --severity=warning lab/start-ubuntu.sh scripts/*.sh tests/normal_traffic.sh tests/compose_smoke.sh
+  sast:
+    name: BTL Semgrep SAST
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Scan with local policy without cloud upload
+        run: docker run --rm -v "$PWD:/src:ro" -w /src semgrep/semgrep:latest semgrep scan --config .semgrep.yml --scan-unknown-extensions --metrics=off --disable-version-check --error .
+  secrets:
+    name: BTL secret scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Scan Git history with redacted findings
+        run: docker run --rm -e GIT_CONFIG_COUNT=1 -e GIT_CONFIG_KEY_0=safe.directory -e GIT_CONFIG_VALUE_0=/src -v "$PWD:/src:ro" ghcr.io/gitleaks/gitleaks:latest git /src --redact --no-banner --log-opts=--all
+  integration:
+    name: BTL Compose integration
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Test IPS rollback comparison without host firewall access
+        run: python3 -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Build, run benign checks, and verify persistence after recreation
+        run: bash tests/compose_smoke.sh

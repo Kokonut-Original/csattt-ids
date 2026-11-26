@@ -1,0 +1,94 @@
+name: lab
+services:
+  victim:
+    build:
+      context: .
+      dockerfile: Dockerfile.ubuntu
+    image: csattt-ubuntu:local
+    container_name: victim
+    hostname: victim
+    environment:
+      LAB_ROLE: victim
+      TZ: Asia/Ho_Chi_Minh
+    working_dir: /root/scripts
+    networks:
+      lab_net:
+        ipv4_address: 172.28.0.10
+    ports:
+      - "127.0.0.1:2222:22"
+      - "127.0.0.1:8080:80"
+    volumes:
+      - ${LAB_STATE_DIR:?Set LAB_STATE_DIR}/logs/victim:/var/log
+      - ../scripts:/root/scripts:ro
+      - ${LAB_STATE_DIR:?Set LAB_STATE_DIR}/pcap:/root/pcap
+    secrets:
+      - source: victim_password
+        target: lab_password
+    healthcheck:
+      test: ["CMD-SHELL", "pgrep -x sshd >/dev/null && curl -fsS http://127.0.0.1/ >/dev/null && pgrep -x dnsmasq >/dev/null"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+
+  kali:
+    build:
+      context: .
+      dockerfile: Dockerfile.kali
+    image: csattt-kali:local
+    container_name: kali
+    hostname: kali
+    environment:
+      TZ: Asia/Ho_Chi_Minh
+    working_dir: /root/scripts
+    networks:
+      lab_net:
+        ipv4_address: 172.28.0.20
+    volumes:
+      - ../scripts:/root/scripts:ro
+      - ${LAB_STATE_DIR:?Set LAB_STATE_DIR}/pcap:/root/pcap
+      - ${LAB_STATE_DIR:?Set LAB_STATE_DIR}/logs/victim:/root/logs/victim:ro
+      - ./fixtures/ssh-wrong-guesses.txt:/root/pass.txt:ro
+    healthcheck:
+      test: ["CMD-SHELL", "command -v nmap hydra hping3 tcpdump dig nc sshpass >/dev/null"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+
+  server3:
+    image: csattt-ubuntu:local
+    container_name: server3
+    hostname: server3
+    environment:
+      LAB_ROLE: server3
+      TZ: Asia/Ho_Chi_Minh
+    networks:
+      lab_net:
+        ipv4_address: 172.28.0.30
+    ports:
+      - "127.0.0.1:2223:22"
+    volumes:
+      - ${LAB_STATE_DIR:?Set LAB_STATE_DIR}/logs/server3:/var/log
+    secrets:
+      - source: server3_password
+        target: lab_password
+    healthcheck:
+      test: ["CMD-SHELL", "pgrep -x sshd >/dev/null && pgrep -x rsyslogd >/dev/null"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+
+secrets:
+  victim_password:
+    file: ${LAB_STATE_DIR:?Set LAB_STATE_DIR}/secrets/victim_password
+  server3_password:
+    file: ${LAB_STATE_DIR:?Set LAB_STATE_DIR}/secrets/server3_password
+
+networks:
+  lab_net:
+    name: lab_lab_net
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: br-lab
+    ipam:
+      config:
+        - subnet: 172.28.0.0/24
