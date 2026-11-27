@@ -19,4 +19,4 @@ Chỉ sinh lưu lượng trong lab được ủy quyền, không dùng live targ
 
 ## Quyền sử dụng
 
-Repo chưa được cấp giấy phép nguồn mở. Quyền tác giả của từng đóng góp được bảo lưu; truy cập private không tự cấp quyền phân phối công khai. Thành phần bên thứ ba giữ giấy phép riêng. Nhóm cần chốt chính sách license và quyền sử dụng phục vụ chấm bài; không tự gán MIT hoặc giấy phép khác cho đóng góp của thành viên khi chưa thống nhất.
+Repo dùng [giấy phép MIT](../LICENSE), bổ sung qua [PR #18](https://github.com/Kokonut-Original/csattt-ids/pull/18). Thành phần bên thứ ba giữ giấy phép riêng.

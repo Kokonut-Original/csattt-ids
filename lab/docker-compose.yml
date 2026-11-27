@@ -7,6 +7,10 @@ services:
     image: csattt-ubuntu:local
     container_name: victim
     hostname: victim
+    # PID files must be discarded on stop. Apache also needs /run/lock.
+    tmpfs:
+      - /run:mode=755
+      - /run/lock:mode=1777
     environment:
       LAB_ROLE: victim
       TZ: Asia/Ho_Chi_Minh
@@ -58,6 +62,8 @@ services:
     image: csattt-ubuntu:local
     container_name: server3
     hostname: server3
+    tmpfs:
+      - /run:mode=755
     environment:
       LAB_ROLE: server3
       TZ: Asia/Ho_Chi_Minh
