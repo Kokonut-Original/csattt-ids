@@ -34,4 +34,4 @@ Không đưa mật khẩu, token, PCAP hoặc log thô, image hay snapshot VM l�
 
 ## IPS DNS tùy chọn
 
-[Demo IPS/drop và rollback](lab/IPS-DNS.md) sử dụng script DNS nguyên trạng và chặn marker của bài trong namespace victim; xem [kết quả và phục hồi IDS](docs/results/ips-dns-drop-2026-11-13.md). Compose khởi động lab ở chế độ IDS. IPS DNS được bật riêng khi cần.
+[Demo IPS/drop và rollback](lab/IPS-DNS.md) sử dụng script DNS nguyên trạng và chặn marker của bài trong namespace victim; xem [kết quả và phục hồi IDS](docs/results/ips-dns-drop-2026-11-13.md). Compose quản lý container. Chế độ IDS hoặc IPS của Suricata được quản lý riêng trên Ubuntu host.
