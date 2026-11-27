@@ -45,4 +45,14 @@ test "$(docker exec kali cat /root/pcap/.ci-persistence)" = persistent-output
 docker exec kali test -r /root/scripts/05_reverse_shell.sh
 docker exec victim test -r /root/scripts/05_reverse_shell.sh
 docker exec kali dig @172.28.0.10 recreated.exfil.lab TXT +tries=1 +time=1 | grep 'status: NXDOMAIN'
-echo 'Compose startup, benign traffic, read-only scripts and persistent output verified.'
+# Restart without recreating either service to catch stale PID files.
+victim_id=$(compose ps -q victim)
+server3_id=$(compose ps -q server3)
+test -n "$victim_id"
+test -n "$server3_id"
+compose stop victim server3
+compose up -d --wait --wait-timeout 90
+test "$(compose ps -q victim)" = "$victim_id"
+test "$(compose ps -q server3)" = "$server3_id"
+test "$(docker exec kali cat /root/pcap/.ci-persistence)" = persistent-output
+echo 'Compose startup, stop/up, benign traffic, read-only scripts and persistent output verified.'
