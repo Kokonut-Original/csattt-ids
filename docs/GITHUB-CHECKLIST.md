@@ -1,5 +1,7 @@
 # Đối chiếu quy định GitHub và bộ nộp SEC1304
 
+Đây là bản rà ngày 13/11/2026. Xem trạng thái hiện tại trong [README](../README.md#trạng-thái-ngày-27112026).
+
 Ngày kiểm tra: 13/11/2026, giờ Việt Nam. Căn cứ: mục 1 “Quy định chung cho mọi bài tập lớn”, Bài 4 và các lưu ý cuối trong tài liệu thầy `danh-muc-10-bai-tap-lon-csattt (2).docx` do Long cung cấp. Yêu cầu trong đề là tiêu chí đối chiếu, không tự chứng minh nhóm đã hoàn thành.
 
 Kết quả tổng thể: lab đã dựng lại và có kiểm chứng năm kịch bản, nhưng repo/bộ nộp chưa đạt toàn bộ quy định. Những thay đổi mới nằm trong [PR #15](https://github.com/Kokonut-Original/csattt-ids/pull/15), chưa merge vào develop/main và chưa được thành viên khác review. “Đạt ở PR” chỉ nói phần đã có trên nhánh PR; không được đọc thành đã phát hành.

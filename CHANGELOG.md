@@ -1,5 +1,13 @@
 # Changelog
 
+## v2.0-final — 27/11/2026
+
+- Thêm giấy phép MIT, báo cáo PDF bản cuối và slide thuyết trình của Nhóm 5.
+- Lưu ảnh Wazuh Discover tại `docs/evidence/w3-dashboard/` và đưa vào Hình 11 của báo cáo.
+- Tạo tag `v1.0-midterm` cho mốc giữa kỳ và `v2.0-final` cho mốc nộp cuối kỳ. [Release v2.0-final](https://github.com/Kokonut-Original/csattt-ids/releases/tag/v2.0-final) đính kèm PDF, video minh chứng và PowerPoint.
+
+Các mục dưới đây ghi trạng thái tại thời điểm rà ngày 13/11/2026.
+
 ## Chưa phát hành — 13/11/2026
 
 - Đưa package và startup vào image build; DNS nội bộ tự bật, không upstream.
